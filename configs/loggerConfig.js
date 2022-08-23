@@ -1,0 +1,23 @@
+
+const dailyRotateFile = require("winston-daily-rotate-file")
+const winston = require("winston");
+const {timestamp,json,prettyPrint,colorize,label,combine}=winston.format
+const logConfig={
+    defaultMeta:{
+        api:"NODE SERVER",
+    },
+    level:"verbose",
+    transports:[new dailyRotateFile({
+        datePattern:"DD-MM-YYYY",
+        filename:"myapp-%DATE%.log",
+        dirname:"./logs/"
+    })],
+    format:combine(
+        label({label:"uygulama V1"}),
+        timestamp(),
+        prettyPrint(),
+        colorize(),
+        json()
+    )
+}
+module.exports = logConfig
